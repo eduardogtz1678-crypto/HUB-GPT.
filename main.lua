@@ -71,3 +71,4 @@ spawn(function()
         end
     end
 end)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/eduardogtz1678-crypto/HUB-GPTT/main/ui.lua"))()
