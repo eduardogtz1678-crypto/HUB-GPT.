@@ -6,15 +6,22 @@ spawn(function()
             local player = game.Players.LocalPlayer
             local char = player.Character
 
-            if char and char:FindFirstChild("HumanoidRootPart") then
-                local root = char.HumanoidRootPart
+            if not char or not char:FindFirstChild("HumanoidRootPart") then continue end
+            local root = char.HumanoidRootPart
 
-                for _,v in pairs(workspace:GetDescendants()) do
-                    if v:FindFirstChild("Humanoid") 
-                    and v:FindFirstChild("HumanoidRootPart") 
-                    and v.Humanoid.Health > 0 
-                    and v ~= char then
+            -- pega nome da missão
+            local questName = ""
+            pcall(function()
+                questName = player.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+            end)
 
+            for _,v in pairs(workspace:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") 
+                and v:FindFirstChild("HumanoidRootPart") 
+                and v.Humanoid.Health > 0 then
+
+                    -- verifica se é o inimigo da missão
+                    if questName ~= "" and string.find(v.Name, questName) then
                         root.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,3,5)
                         break
                     end
