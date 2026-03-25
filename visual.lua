@@ -1,12 +1,14 @@
 spawn(function()
-    while task.wait(2) do
+    while true do
+        task.wait(2)
+
         if _G.Settings.ESP then
-            for _,v in pairs(workspace:GetChildren()) do
-                if v:FindFirstChild("Humanoid") then
-                    if not v:FindFirstChild("HL") then
-                        local h = Instance.new("Highlight",v)
-                        h.Name="HL"
-                    end
+            for _,v in pairs(workspace:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and not v:FindFirstChild("Highlight") then
+                    local esp = Instance.new("Highlight")
+                    esp.Parent = v
+                    esp.FillColor = Color3.fromRGB(255,0,0)
+                    esp.OutlineColor = Color3.new(1,1,1)
                 end
             end
         end
