@@ -1,5 +1,7 @@
 spawn(function()
-    while task.wait(2) do
+    while true do
+        task.wait(2)
+
         if _G.Settings.AutoQuest then
             for _,v in pairs(workspace:GetDescendants()) do
                 if v:IsA("ProximityPrompt") then
