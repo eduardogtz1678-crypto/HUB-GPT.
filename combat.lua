@@ -1,20 +1,22 @@
 spawn(function()
-    while task.wait() do
+    while true do
+        task.wait()
+
         if _G.Settings.AutoFarm then
-            local p = game.Players.LocalPlayer
-            local c = p.Character
-            local root = c and c:FindFirstChild("HumanoidRootPart")
+            local player = game.Players.LocalPlayer
+            local char = player.Character
 
-            if root then
-                for _,v in pairs(workspace:GetChildren()) do
-                    local hum = v:FindFirstChild("Humanoid")
-                    local hrp = v:FindFirstChild("HumanoidRootPart")
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                local root = char.HumanoidRootPart
 
-                    if hum and hrp and hum.Health > 0 then
-                        root.CFrame = hrp.CFrame * CFrame.new(0,3,5)
+                for _,v in pairs(workspace:GetDescendants()) do
+                    if v:FindFirstChild("Humanoid") 
+                    and v:FindFirstChild("HumanoidRootPart") 
+                    and v.Humanoid.Health > 0 
+                    and v ~= char then
 
-                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,true,game,0)
-                        game:GetService("VirtualInputManager"):SendMouseButtonEvent(0,0,0,false,game,0)
+                        root.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,3,5)
+                        break
                     end
                 end
             end
